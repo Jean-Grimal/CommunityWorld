@@ -17,3 +17,8 @@ class FormulaireFiltrage(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('priorite',)
+
+class FormulaireFiltrageCommu(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('priorite','communaute',)

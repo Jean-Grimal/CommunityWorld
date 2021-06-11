@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 from .models import Communaute, Post, Commentaire,priorite
-from .forms import FormulaireCom, Ecrire_Un_post, FormulaireFiltrage
+from .forms import FormulaireCom, Ecrire_Un_post, FormulaireFiltrage, FormulaireFiltrageCommu
 
 
 def communautes(request):
@@ -226,3 +226,69 @@ def Filtrage_Priorite(request):
         tous_les_posts = tous_les_posts.order_by('-date')
         return render(request, 'Fil_actu.html', locals())
     return render(request, 'filtrage_priorite.html', locals())
+
+def Filtrage_Priorite_Communaute(request):
+    form = FormulaireFiltrageCommu(request.POST or None)
+    if form.is_valid():
+        Priorite = form.cleaned_data['priorite']
+        Communaute_Choisie = form.cleaned_data['communaute']
+
+        tous_les_posts = Post.objects.none()
+
+        posts_aime = []
+        posts_vus = []
+        all_posts = Post.objects.all()
+        for post in all_posts:
+            if post.recherche_vue(request.user):
+                posts_vus.append(post)
+            if post.recherche_like(request.user):
+                posts_aime.append(post)
+
+
+        if Priorite.label == 'Ecarlate':
+            posts_precedents = tous_les_posts
+            posts_commu = Post.objects.filter(communaute=Communaute_Choisie).filter(priorite=Priorite)
+            tous_les_posts = posts_precedents | posts_commu
+        elif Priorite.label =='Rouge':
+            posts_precedents = tous_les_posts
+            posts_commu = Post.objects.filter(communaute=Communaute_Choisie).filter(priorite=Priorite)
+            tous_les_posts = posts_precedents | posts_commu
+            posts_precedents = tous_les_posts
+            prio2 = priorite.objects.get(label='Ecarlate')
+            posts_commu = Post.objects.filter(communaute=Communaute_Choisie).filter(priorite=prio2)
+            tous_les_posts = posts_precedents | posts_commu
+        elif Priorite.label == 'Orange':
+            posts_precedents = tous_les_posts
+            posts_commu = Post.objects.filter(communaute=Communaute_Choisie).filter(priorite=Priorite)
+            tous_les_posts = posts_precedents | posts_commu
+            posts_precedents = tous_les_posts
+            prio2 = priorite.objects.get(label='Ecarlate')
+            posts_commu = Post.objects.filter(communaute=Communaute_Choisie).filter(priorite=prio2)
+            tous_les_posts = posts_precedents | posts_commu
+            posts_precedents = tous_les_posts
+            prio2 = priorite.objects.get(label='Rouge')
+            posts_commu = Post.objects.filter(communaute=Communaute_Choisie).filter(priorite=prio2)
+            tous_les_posts = posts_precedents | posts_commu
+        elif Priorite.label =='Jaune':
+            posts_precedents = tous_les_posts
+            posts_commu = Post.objects.filter(communaute=Communaute_Choisie).filter(priorite=Priorite)
+            tous_les_posts = posts_precedents | posts_commu
+            posts_precedents = tous_les_posts
+            prio2 = priorite.objects.get(label='Ecarlate')
+            posts_commu = Post.objects.filter(communaute=Communaute_Choisie).filter(priorite=prio2)
+            tous_les_posts = posts_precedents | posts_commu
+            posts_precedents = tous_les_posts
+            prio2 = priorite.objects.get(label='Rouge')
+            posts_commu = Post.objects.filter(communaute=Communaute_Choisie).filter(priorite=prio2)
+            tous_les_posts = posts_precedents | posts_commu
+            posts_precedents = tous_les_posts
+            prio2 = priorite.objects.get(label='Orange')
+            posts_commu = Post.objects.filter(communaute=Communaute_Choisie).filter(priorite=prio2)
+            tous_les_posts = posts_precedents | posts_commu
+        else:
+            posts_precedents = tous_les_posts
+            posts_commu = Post.objects.filter(communaute=Communaute_Choisie)
+            tous_les_posts = posts_precedents | posts_commu
+        tous_les_posts = tous_les_posts.order_by('-date')
+        return render(request, 'Fil_actu.html', locals())
+    return render(request, 'filtrage_priorite_communaute.html', locals())

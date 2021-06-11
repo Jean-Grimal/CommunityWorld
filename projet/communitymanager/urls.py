@@ -17,4 +17,5 @@ urlpatterns = [
     path('communautes/like/<id_du_post>', views.like, name='like'),
     path('communautes/unlike/<id_du_post>', views.unlike, name='unlike'),
     path('communautes/filtrage/priorite', views.Filtrage_Priorite, name='filtrage_priorite'),
+    path('communautes/filtrage/priorite/communaute', views.Filtrage_Priorite_Communaute, name='filtrage_priorite_communaute'),
 ]

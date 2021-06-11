@@ -12,7 +12,7 @@
 {% for commu in communautes_suivies %}
 <div class="shadow p-4 mb-4 bg-light rounded">
     <div class="row" style="...">
-            <a class="text" href="{% url 'communaute' commu.id %}" style="color: Gold">{{ commu.nom }}  </a>
+            <a class="text" href="{% url 'communaute' commu.id %}" style="color: teal">{{ commu.nom }}  </a>
             <hr>
             <a class="btn float-right" href="{% url 'desabonnement' commu.id %}" role="button" style="color: Red">
             <i class="fas fa-check-square"></i>
@@ -26,7 +26,7 @@
 {% for commu in communautes_non_suivies %}
 <div class="p-4 mb-4 bg-light rounded">
     <div class="row" style="...">
-        <a class="text" href="{% url 'communaute' commu.id %}" style="color: Black">{{ commu.nom }}  </a>
+        <a class="text" href="{% url 'communaute' commu.id %}" style="color: teal">{{ commu.nom }}  </a>
             <hr>
             <a class="btn float-right" href="{% url 'abonnement' commu.id %}" role="button" style="color: aquamarine">
             <i class="far fa-check-square"></i>

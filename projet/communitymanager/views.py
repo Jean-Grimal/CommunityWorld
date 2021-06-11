@@ -15,6 +15,7 @@ def communautes(request):
         communautes_suivies = []
         communautes_non_suivies = []
 
+
         for commu in commus:
             if commu.recherche_abonnement(request.user):
                 communautes_suivies.append(commu)
@@ -42,15 +43,28 @@ def desabonnement(request, id_de_la_communaute):
 def communaute(request, id_de_la_communaute):
     posts_aime = []
     posts_vus = []
+    posts_ecarlates = []
+    posts_rouges = []
+    posts_oranges = []
+    posts_jaunes = []
     all_posts = Post.objects.all()
     for post in all_posts :
+        prio = post.priorite
         if post.recherche_vue(request.user):
             posts_vus.append(post)
         if post.recherche_like(request.user):
             posts_aime.append(post)
+        if prio.label == 'Ecarlate':
+            posts_ecarlates.append(post)
+        if prio.label == 'Rouge':
+            posts_rouges.append(post)
+        if prio.label == 'Orange':
+            posts_oranges.append(post)
+        if prio.label == 'Jaune':
+            posts_jaunes.append(post)
     commu = Communaute.objects.get(id=id_de_la_communaute)
     Posts = Post.objects.filter(communaute__id=id_de_la_communaute)
-    utilisateur = request.user
+    Utilisateur = request.user
     return render(request, 'communaute.html', locals())
 
 
@@ -126,17 +140,30 @@ def modif_post(request, post_id):
 def afficher_fil_actu(request):
     if request.user.is_authenticated:
         commus = Communaute.objects.all()
-
+        Utilisateur = request.user
         tous_les_posts = Post.objects.none()
 
         posts_aime = []
         posts_vus = []
+        posts_ecarlates = []
+        posts_rouges = []
+        posts_oranges = []
+        posts_jaunes = []
         all_posts = Post.objects.all()
         for post in all_posts:
+            prio = post.priorite
             if post.recherche_vue(request.user):
                 posts_vus.append(post)
             if post.recherche_like(request.user):
                 posts_aime.append(post)
+            if prio.label == 'Ecarlate':
+                posts_ecarlates.append(post)
+            if prio.label == 'Rouge':
+                posts_rouges.append(post)
+            if prio.label == 'Orange':
+                posts_oranges.append(post)
+            if prio.label == 'Jaune':
+                posts_jaunes.append(post)
 
         for commu in commus:
             if commu.recherche_abonnement(request.user):
@@ -171,12 +198,25 @@ def Filtrage_Priorite(request):
 
         posts_aime = []
         posts_vus = []
+        posts_ecarlates = []
+        posts_rouges = []
+        posts_oranges = []
+        posts_jaunes = []
         all_posts = Post.objects.all()
         for post in all_posts:
+            prio = post.priorite
             if post.recherche_vue(request.user):
                 posts_vus.append(post)
             if post.recherche_like(request.user):
                 posts_aime.append(post)
+            if prio.label == 'Ecarlate':
+                posts_ecarlates.append(post)
+            if prio.label == 'Rouge':
+                posts_rouges.append(post)
+            if prio.label == 'Orange':
+                posts_oranges.append(post)
+            if prio.label == 'Jaune':
+                posts_jaunes.append(post)
 
         for commu in commus:
             if commu.recherche_abonnement(request.user):
@@ -235,15 +275,27 @@ def Filtrage_Priorite_Communaute(request):
         Communaute_Choisie = form.cleaned_data['communaute']
 
         tous_les_posts = Post.objects.none()
-
+        posts_ecarlates = []
+        posts_rouges = []
+        posts_oranges = []
+        posts_jaunes = []
         posts_aime = []
         posts_vus = []
         all_posts = Post.objects.all()
         for post in all_posts:
+            prio = post.priorite
             if post.recherche_vue(request.user):
                 posts_vus.append(post)
             if post.recherche_like(request.user):
                 posts_aime.append(post)
+            if prio.label == 'Ecarlate':
+                posts_ecarlates.append(post)
+            if prio.label == 'Rouge':
+                posts_rouges.append(post)
+            if prio.label == 'Orange':
+                posts_oranges.append(post)
+            if prio.label == 'Jaune':
+                posts_jaunes.append(post)
 
 
         if Priorite.label == 'Ecarlate':

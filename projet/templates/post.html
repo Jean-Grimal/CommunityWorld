@@ -7,6 +7,11 @@
 
 {% block content %}
 
+<div class="shadow p-4 mb-4 bg-light rounded ">
+    <h1 class="text" style="color: teal">{{ Commu.nom }}</h1>
+
+    </div>
+
 {% if couleur == 'Ecarlate'%}
 <h1 class="text" style="color:darkred">  {{ post.titre }} :</h1>
 {% elif couleur == 'Rouge' %}
@@ -20,6 +25,12 @@
 {% endif %}
 <p> par {{ post.auteur }} le {{ post.date }}</p>
 <h2>{{ post.description }}</h2>
+
+<div >
+    <h1 class="text" style="color: teal"> </h1>
+    <br>
+    <br>
+    </div>
 
 {% if post.evenementiel %}
 <div class="shadow p-4 mb-4 bg-light rounded ">

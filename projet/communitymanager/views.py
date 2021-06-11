@@ -59,6 +59,7 @@ def afficher_post(request, id_du_post):
     users = User.objects.all()
     post = Post.objects.get(id=id_du_post)
     Prio = post.priorite
+    Commu = post.communaute
     couleur = Prio.label
     post.vues.add(request.user)
     commentaires = Commentaire.objects.filter(post__id=id_du_post)
